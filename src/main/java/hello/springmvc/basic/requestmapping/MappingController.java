@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-public class MappinController {
+public class MappingController {
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
@@ -61,7 +61,7 @@ public class MappinController {
     }
 
     /**
-     * PathVariable 사용 다중
+     * PathVariable 사용 다중 url자체에 값이 들어가
      */
     @GetMapping("/mapping/users/{userId}/orders/{orderId}")
     public String mappingPath(@PathVariable String userId, @PathVariable Long
@@ -83,5 +83,45 @@ public class MappinController {
         log.info("mappingParam");
         return "ok";
     }
+
+    /**
+     * 특정 헤더로 추가 매핑
+     * headers="mode",
+     * headers="!mode"
+     * headers="mode=debug"
+     * headers="mode!=debug" (! = )
+     */
+    @GetMapping(value = "/mapping-header", headers = "mode=debug")
+    public String mappingHeader() {
+        log.info("mappingHeader");
+        return "ok";
+    }
+
+    /**
+     * Content-Type 헤더 기반 추가 매핑 Media Type
+     * consumes="application/json"
+     * consumes="!application/json"
+     * consumes="application/*"
+     * consumes="*\/*"
+     * MediaType.APPLICATION_JSON_VALUE
+     */
+    @PostMapping(value = "/mapping-consume", consumes = "application/json")
+    public String mappingConsumes() {
+        log.info("mappingConsumes");
+        return "ok";
+    }
+
+    /**
+     * Accept 헤더 기반 Media Type
+     * produces = "text/html"
+     * produces = "!text/html"
+     * produces = "text/*"
+     * produces = "*\/*"
+     */
+    @PostMapping(value = "/mapping-produce", produces = "text/html")
+    public String mappingProduces() {
+        log.info("mappingProduces");
+        return "ok";
+    }
 }
- new
+
